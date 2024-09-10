@@ -16,7 +16,6 @@ void    actualise_pile(int *pilex, char *str)
             j++;
             i++;
         }
-        ft_printf("taille pile : %d\n", j);
         i = 0;
         while (j > i)
         {
@@ -31,7 +30,6 @@ void    actualise_pile(int *pilex, char *str)
             j++;
             i++;
         }
-        ft_printf("taille pile : %d\n", j);
         i = 1;
         while (i < j)
         {
@@ -39,8 +37,6 @@ void    actualise_pile(int *pilex, char *str)
             i++;
         }
         pilex[i] = 0;
-        if (pilex[i])
-            ft_printf("caca");
     }
 }
 
@@ -56,23 +52,86 @@ void    sa_sb(int *pilex)
 
 void    ss(int  *pilea, int *pileb)
 {
-    int temp;
-
-    temp = pilea[1];
-    pilea[1] = pilea[2];
-    pilea[2] = temp;
-
-    temp = pileb[1];
-    pileb[1] = pileb[2];
-    pileb[2] = temp;
+    sa_sb(pilea);
+    sa_sb(pileb);
 }
 
-void    pb(int *pilea, int  *pileb)
+void    pb_pa(int *pilea, int  *pileb, char *str)
 {
-    if (pileb[1])
-        actualise_pile(pileb, "push");
-    pileb[1] = pilea[1];
-    actualise_pile(pilea, "unpush");
+    if (str == "pb")
+    {
+        if (pileb[1])
+            actualise_pile(pileb, "push");
+        pileb[1] = pilea[1];
+        actualise_pile(pilea, "unpush");
+    }
+    if (str == "pa")
+    {
+        if (pilea[1])
+            actualise_pile(pilea, "push");
+        pilea[1] = pileb[1];
+        actualise_pile(pileb, "unpush");
+    }
+}
+
+void    ra_rb(int *pilex)
+{
+    int i;
+    int j;
+    int temp;
+
+    i = 1;
+    j = 0;
+    temp = 0;
+    while (pilex[i])
+    {
+        j++;
+        i++;
+    }
+    i = 1;
+    temp = pilex[i];
+    while (i < j)
+    {
+        pilex[i] = pilex[i + 1];
+        i++;
+    }
+    pilex[i] = temp;
+}
+
+void    rr(int *pilea, int *pileb)
+{
+    ra_rb(pilea);
+    ra_rb(pileb);
+}
+
+void    rra_rrb(int *pilex)
+{
+    int i;
+    int j;
+    int temp;
+
+    i = 1;
+    j = 0;
+    temp = 0;
+    while (pilex[i])
+    {
+        j++;
+        i++;
+    }
+    i = 1;
+    temp = pilex[j];
+    while (j > i)
+    {
+        pilex[j] = pilex[j - 1];
+        j--;
+    }
+    pilex[1] = temp;
+}
+
+void    rrr(int *pilea, int *pileb)
+{
+    rra_rrb(pilea);
+    rra_rrb(pileb);
 }
 
 int     main(int argc, char *argv[])
@@ -101,9 +160,6 @@ int     main(int argc, char *argv[])
     }
     j = 1;
     ft_printf("Pile b\n");
-    pileb[1] = 3;
-    pileb[2] = 1;
-    pileb[3] = 2;
     while (j < i)
     {
         ft_printf("%d\n", pileb[j]);
@@ -111,9 +167,9 @@ int     main(int argc, char *argv[])
     }
     //verif
     ft_printf("\nTesting\n");
-    //sa_sb(pilea);
-    //ss(pilea, pileb);
-    pb(pilea, pileb);
+    pb_pa(pilea, pileb, "pb");
+    pb_pa(pilea, pileb, "pb");
+    pb_pa(pilea, pileb, "pb");
     j = 1;
     ft_printf("Pile a\n");
     while (j < i)
@@ -128,7 +184,7 @@ int     main(int argc, char *argv[])
         ft_printf("%d\n", pileb[j]);
         j++;
     }
-    ft_printf("\nTesting\n");
+    ft_printf("Testing\n");
     free(pilea);
     free(pileb);
     return (0);
