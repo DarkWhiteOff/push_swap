@@ -40,14 +40,35 @@ void    actualise_pile(int *pilex, char *str)
     }
 }
 
+int pile_size(int *pilex)
+{
+    int i;
+    int j;
+    int temp;
+
+    i = 1;
+    j = 0;
+    temp = 0;
+    while (pilex[i])
+    {
+        j++;
+        i++;
+    }
+    return (j);
+}
+
 // Creation des fonctions sa/b ss pa/b ra/b rr rra/b rrr
 void    sa_sb(int *pilex)
 {
     int temp;
 
-    temp = pilex[1];
-    pilex[1] = pilex[2];
-    pilex[2] = temp;
+    temp = 0;
+    if (pile_size(pilex) >= 2)
+    {
+        temp = pilex[1];
+        pilex[1] = pilex[2];
+        pilex[2] = temp;
+    }
 }
 
 void    ss(int  *pilea, int *pileb)
@@ -167,6 +188,10 @@ int     main(int argc, char *argv[])
     }
     //verif
     ft_printf("\nTesting\n");
+    pb_pa(pilea, pileb, "pb");
+    pb_pa(pilea, pileb, "pb");
+    pb_pa(pilea, pileb, "pb");
+    pb_pa(pilea, pileb, "pb");
     pb_pa(pilea, pileb, "pb");
     pb_pa(pilea, pileb, "pb");
     pb_pa(pilea, pileb, "pb");
