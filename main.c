@@ -1,5 +1,6 @@
 #include "push_swap.h"
 
+// Fonctions utils
 void    actualise_pile(int *pilex, char *str)
 {
     int i;
@@ -57,7 +58,7 @@ int pile_size(int *pilex)
     return (j);
 }
 
-// Creation des fonctions sa/b ss pa/b ra/b rr rra/b rrr
+// Fonctions sa/b ss pa/b ra/b rr rra/b rrr
 void    sa_sb(int *pilex)
 {
     int temp;
@@ -79,14 +80,14 @@ void    ss(int  *pilea, int *pileb)
 
 void    pb_pa(int *pilea, int  *pileb, char *str)
 {
-    if (str == "pb")
+    if (str == "pb" && pile_size(pilea) > 0)
     {
         if (pileb[1])
             actualise_pile(pileb, "push");
         pileb[1] = pilea[1];
         actualise_pile(pilea, "unpush");
     }
-    if (str == "pa")
+    if (str == "pa" && pile_size(pileb) > 0)
     {
         if (pilea[1])
             actualise_pile(pilea, "push");
@@ -155,6 +156,100 @@ void    rrr(int *pilea, int *pileb)
     rra_rrb(pileb);
 }
 
+// Fonction qui permet de trouver la facon la plus courte de trier la pile
+/* void    set_finder(int *pilea, int *pileb)
+{
+    int N;
+    int swappable_index;
+    int swappable_value;
+
+    N = pile_size(pilea);
+    swappable_index = 0;
+    swappable_value = 0;
+    if(pile_is_sorted(pilea) == 1)
+    {
+        if (pilea[1] == min_number_value(pilea))
+            return ;
+        else
+        {
+            if (min_number_index(pilea) <= N / 2)
+            {
+                // rotate pilea while (pile[1] != min_number_value)
+            }
+            else
+            {
+                // rotate pilea while (pile[1] != min_number_value)
+            }
+        }
+    }
+    else if (pile_is_sorted(pilea) == 0)
+    {
+        swappable_index = find_swappable_index(pilea);
+        swappable_value = pile[swappable_index];
+        if (swappable_index <= N / 2)
+        {
+            // rotate pilea while (pile[1] != swappable_value)
+        }
+        else
+        {
+            // rotate pilea while (pile[1] != swappable_value)
+        }
+        //swap pilea
+    }
+} */
+
+int pile_is_sorted()
+{
+    
+}
+
+void    set_finder_v2(int *pilea, int *pileb)
+{
+    int N;
+    int swappable_index;
+    int swappable_value;
+
+    N = pile_size(pilea);
+    swappable_index = 0;
+    swappable_value = 0;
+    while (pile_is_sorted(pilea) == 0)
+    {
+        swappable_index = find_swappable_index(pilea);
+        swappable_value = pile[swappable_index];
+        if (swappable_index <= N / 2)
+        {
+            while (pile[1] != swappable_value)
+                ra_rb(pilea);
+        }
+        else
+        {
+            while (pile[1] != swappable_value)
+                rra_rrb(pilea);
+        }
+        sa_sb(pilea);
+    }
+    if(pile_is_sorted(pilea) == 1)
+    {
+        if (pilea[1] == min_number_value(pilea))
+            return ;
+        else
+        {
+            if (min_number_index(pilea) <= N / 2)
+            {
+                while (pile[1] != min_number_value(pilea))
+                    ra_rb(pilea);
+            }
+            else
+            {
+                while (pile[1] != min_number_value(pilea))
+                    rra_rrb(pilea);
+            }
+        }
+    }
+    return ;
+}
+
+// Main
 int     main(int argc, char *argv[])
 {
     int     i = 1;
@@ -174,37 +269,33 @@ int     main(int argc, char *argv[])
     //verif
     j = 1;
     ft_printf("Pile a\n");
-    while (j < i)
+    while (j - 1 < pile_size(pilea))
     {
         ft_printf("%d\n", pilea[j]);
         j++;
     }
     j = 1;
     ft_printf("Pile b\n");
-    while (j < i)
+    while (j - 1 < pile_size(pileb))
     {
         ft_printf("%d\n", pileb[j]);
         j++;
     }
     //verif
     ft_printf("\nTesting\n");
-    pb_pa(pilea, pileb, "pb");
-    pb_pa(pilea, pileb, "pb");
-    pb_pa(pilea, pileb, "pb");
-    pb_pa(pilea, pileb, "pb");
-    pb_pa(pilea, pileb, "pb");
-    pb_pa(pilea, pileb, "pb");
-    pb_pa(pilea, pileb, "pb");
+    //instructions
+    set_finder(pilea, pileb);;
+    //instructions
     j = 1;
     ft_printf("Pile a\n");
-    while (j < i)
+    while (j - 1 < pile_size(pilea))
     {
         ft_printf("%d\n", pilea[j]);
         j++;
     }
     j = 1;
     ft_printf("Pile b\n");
-    while (j < i)
+    while (j - 1 < pile_size(pileb))
     {
         ft_printf("%d\n", pileb[j]);
         j++;
