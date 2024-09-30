@@ -1,44 +1,59 @@
 #include "push_swap.h"
 
+void    print_piles(int *pilea, int *pileb, int pilesize)
+{
+    int r = 0;
+        ft_printf("Pile a\n");
+        while (pilea[r])
+        {
+            ft_printf("%d\n", pilea[r]);
+            r++;
+        }
+        r = 0;
+        ft_printf("Pile b\n");
+        while (pileb[r])
+        {
+            ft_printf("%d\n", pileb[r]);
+            r++;
+        }
+}
+
 // Fonctions utils
-void    actualise_pile(int *pilex, char *str)
+void    actualise_pile(int *pilex, char *str, int pilesize)
 {
     int i;
     int j;
-    int temp;
 
-    i = 1;
+    i = 0;
     j = 0;
-    temp = 0;
     if (str == "push")
     {
-        while (pilex[i])
+        i = pilesize - 1;
+        while (i >= j)
         {
-            j++;
-            i++;
-        }
-        i = 0;
-        while (j > i)
-        {
-            pilex[j + 1] = pilex[j];
-            j--;
+            pilex[i + 1] = pilex[i];
+            i--;
         }
     }
     if (str == "unpush")
     {
-        while (pilex[i])
+        while (j < pilesize - 1)
         {
+            pilex[j] = pilex[j + 1];
             j++;
-            i++;
         }
-        i = 1;
-        while (i < j)
-        {
-            pilex[i] = pilex[i + 1];
-            i++;
-        }
-        pilex[i] = 0;
+        pilex[j] = 0;
     }
+}
+
+int ft_pilesize(int *pilea)
+{
+    int i;
+
+    i = 0;
+    while (pilea[i])
+        i++;
+    return (i);
 }
 
 // Fonctions sa/b ss pa/b ra/b rr rra/b rrr
@@ -61,21 +76,21 @@ void    ss(int  *pilea, int *pileb, int pilesize)
     sa_sb(pileb, pilesize);
 }
 
-void    pb_pa(int *pilea, int  *pileb, char *str, int pilesize)
+void    pb_pa(int *pilea, int  *pileb, char *str, int pilesizeofa, int pilesizeofb)
 {
-    if (str == "pb" && pilesize > 0)
+    if (str == "pb" && pilesizeofa > 0)
     {
-        if (pileb[1])
-            actualise_pile(pileb, "push");
-        pileb[1] = pilea[1];
-        actualise_pile(pilea, "unpush");
+        if (pilesizeofb > 0)
+            actualise_pile(pileb, "push", pilesizeofb);
+        pileb[0] = pilea[0];
+        actualise_pile(pilea, "unpush", pilesizeofa);
     }
-    if (str == "pa" && pilesize > 0)
+    if (str == "pa" && pilesizeofb > 0)
     {
-        if (pilea[1])
-            actualise_pile(pilea, "push");
-        pilea[1] = pileb[1];
-        actualise_pile(pileb, "unpush");
+        if (pilesizeofa > 0)
+            actualise_pile(pilea, "push", pilesizeofa);
+        pilea[0] = pileb[0];
+        actualise_pile(pileb, "unpush", pilesizeofb);
     }
 }
 
@@ -297,7 +312,7 @@ void    sort_and_assign(int *pilea, int *pileacpy, int pilesize)
         {
             if (pilea[i] == pileacpy[j])
             {
-                pilea[i] = j;
+                pilea[i] = j + 1;
                 break ;
             }
             j++;
@@ -307,23 +322,40 @@ void    sort_and_assign(int *pilea, int *pileacpy, int pilesize)
     }
 }
 
+int ft_strbitlen(char *octet)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while (octet[j] != '1' && octet[j] != '\0')
+        j++;
+    while (octet[j] != '\0')
+    {
+        i++;
+        j++;
+    }
+    return (i);
+}
+
 int	decimal_to_bits(int max_value)
 {
 	int	i;
 	int	j;
     char    *octet;
 
-	i = 7;
+	i = 31;
 	j = 0;
-    octet = malloc (sizeof(char) * 32);
+    octet = malloc (sizeof(char) * 33);
 	while (i >= 0)
 	{
-		octet[j] = (c >> i & 1) + '0';
+		octet[j] = (max_value >> i & 1) + '0';
 		i--;
 		j++;
 	}
 	octet[j] = '\0';
-	return (octet);
+	return (ft_strbitlen(octet));
 }
 
 int max_number_value(int *pilea, int pilesize)
@@ -343,20 +375,50 @@ int max_number_value(int *pilea, int pilesize)
     return (max_nb);
 }
 
-void    bit_and_set(int *pilea, int pilesize)
+void    bit_and_set(int *pilea, int *pileb, int pilesize)
 {
     int i;
+    int j;
     int max_value;
     int bit_index_max;
+    int pilesizeofa;
+    int pilesizeofb;
 
     i = 0;
+    j = 0;
     max_value = max_number_value(pilea, pilesize);
     bit_index_max = decimal_to_bits(max_value);
-    /* while (i < pilesize)
+    pilesizeofa = pilesize;
+    pilesizeofb = 0;
+    while (i < bit_index_max)
     {
-        
+        while (j < pilesize)
+        {
+            if ((pilea[0] >> i & 1) == 0)
+            {
+                pb_pa(pilea, pileb, "pb", pilesizeofa, pilesizeofb);
+                pilesizeofa -= 1;
+                pilesizeofb += 1;
+                ft_printf("pb\n");
+            }
+            else
+            {
+                ra_rb(pilea, pilesizeofa);
+                ft_printf("ra\n");
+            }
+            j++;
+        }
+        print_piles(pilea, pileb, pilesize);
+        ft_printf("pilesizeofb : %d\n", pilesizeofb);
+        while (pilesizeofb-- > 0)
+            pb_pa(pilea, pileb, "pa", pilesizeofa, pilesizeofb);
+        print_piles(pilea, pileb, pilesize);
+        exit(0);
+        j = 0;
+        pilesizeofa = pilesize;
+        pilesizeofb = 0;
         i++;
-    } */
+    }
 }
 
 // Main
@@ -381,37 +443,11 @@ int     main(int argc, char *argv[])
         i++;
         k++;
     }
-
+    //instructions
     sort_and_assign(pilea, pileacpy, pilesize);
-    bit_and_set(pilea, pilesize);
-    free(pilea);
-    free(pileb);
     free(pileacpy);
-    exit(0);
-    //verif
-    i = 0;
-    ft_printf("Pile a avant\n");
-    while (i < pilesize)
-    {
-        ft_printf("%d\n", pilea[i]);
-        i++;
-    }
-    ft_printf("\n");
-    //verif
-
+    bit_and_set(pilea, pileb, pilesize);
     //instructions
-    //set_finder_v2(pilea, pileb, pilesize);
-    //instructions
-
-    //verif
-    i = 0;
-    ft_printf("Pile a après\n");
-    while (i < pilesize)
-    {
-        ft_printf("%d\n", pilea[i]);
-        i++;
-    }
-    //verif
     free(pilea);
     free(pileb);
     return (0);
