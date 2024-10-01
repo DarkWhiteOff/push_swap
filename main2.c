@@ -247,7 +247,38 @@ int find_swappable_index(int *pileacpy, int pilesize)
     }
 }
 
-void    sort(int *pileacpy, int pilesize)
+void    rotate_pile(int *pileacpy, int pilesize, int check)
+{
+    if (pile_is_sorted(pileacpy, pilesize) == 1)
+    {
+        if (pileacpy[0] == min_number_value(pileacpy, pilesize))
+            return ;
+        else
+        {
+            if (min_number_index(pileacpy, pilesize) <= pilesize / 2)
+            {
+                while (pileacpy[0] != min_number_value(pileacpy, pilesize))
+                {
+                    ra_rb(pileacpy, pilesize);
+                    if (check == 1)
+                        ft_printf("ra\n");
+                }
+            }
+            else
+            {
+                while (pileacpy[0] != min_number_value(pileacpy, pilesize))
+                {
+                    rra_rrb(pileacpy, pilesize);
+                    if (check == 1)
+                        ft_printf("rra\n");
+                }
+            }
+        }
+    }
+    return ;
+}
+
+void    sort(int *pileacpy, int pilesize, int check)
 {
     int swappable_index;
     int swappable_value;
@@ -262,33 +293,26 @@ void    sort(int *pileacpy, int pilesize)
         if (swappable_index <= pilesize / 2)
         {
             while (pileacpy[0] != swappable_value)
+            {
                 ra_rb(pileacpy, pilesize);
+                if (check == 1)
+                    ft_printf("ra\n");
+            }
         }
         else
         {
             while (pileacpy[0] != swappable_value)
+            {
                 rra_rrb(pileacpy, pilesize);
+                if (check == 1)
+                    ft_printf("rra\n");
+            }
         }
         sa_sb(pileacpy, pilesize);
+        if (check == 1)
+            ft_printf("sa\n");
     }
-    if (pile_is_sorted(pileacpy, pilesize) == 1)
-    {
-        if (pileacpy[0] == min_number_value(pileacpy, pilesize))
-            return ;
-        else
-        {
-            if (min_number_index(pileacpy, pilesize) <= pilesize / 2)
-            {
-                while (pileacpy[0] != min_number_value(pileacpy, pilesize))
-                    ra_rb(pileacpy, pilesize);
-            }
-            else
-            {
-                while (pileacpy[0] != min_number_value(pileacpy, pilesize))
-                    rra_rrb(pileacpy, pilesize);
-            }
-        }
-    }
+    rotate_pile(pileacpy, pilesize, check);
     return ;
 }
 
@@ -304,7 +328,7 @@ void    sort_and_assign(int *pilea, int *pileacpy, int pilesize)
         pileacpy[i] = pilea[i];
         i++;
     }
-    sort(pileacpy, pilesize);
+    sort(pileacpy, pilesize, 0);
     i = 0;
     while (i < pilesize)
     {
@@ -410,45 +434,263 @@ void    bit_and_set(int *pilea, int *pileb, int pilesize)
             }
             j++;
         }
-        //print_piles(pilea, pileb, pilesizeofa, pilesizeofb);
-        //ft_printf("pilesizeofa : %d / pilesizeofb : %d\n", pilesizeofa, pilesizeofb);
-        //exit(0);
         while (pilesizeofb > 0)
         {
             pb_pa(pilea, pileb, "pa", pilesizeofa, pilesizeofb);
             pilesizeofb -= 1;
             pilesizeofa += 1;
+            ft_printf("pa\n");
         }
-        //print_piles(pilea, pileb, pilesizeofa, pilesizeofb);
-        //ft_printf("pilesizeofa : %d / pilesizeofb : %d\n", pilesizeofa, pilesizeofb);
-        //free(pilea);
-        //free(pileb);
-        //exit(0);
         j = 0;
         i++;
     }
     print_piles(pilea, pileb, pilesizeofa, pilesizeofb);
 }
 
-void    handle_errors(char **argv)
+int handle_doubles(int *pilea, int pilesize)
 {
     int i;
     int j;
+    int actual_nb;
+
+    i = 0;
+    j = 0;
+    actual_nb = 0;
+    while (i < pilesize)
+    {
+        actual_nb = pilea[i];
+        while (j < pilesize)
+        {
+            if ((pilea[i] == pilea[j]) && (i != j))
+                return (0);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+    return (1);
+}
+
+int is_there_space(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i] == ' ')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+int ft_strlenbeg(char *str, int k)
+{
+    int i;
+
+    i = 0;
+    while (str[k] != ' ' && str[k] != '\0')
+    {
+        i++;
+        k++;
+    }
+    return (i);
+}
+
+int fill_argv(char *str, char **argv)
+{
+    int i;
+    int j;
+    int k;
+    char *strok;
 
     i = 1;
     j = 0;
-    while (argv[i])
+    k = 0;
+    while (str[k] == ' ' && str[k] != '\0')
+        k++;
+    while (str[k] != '\0')
     {
-        while (argv[i][j] != '\0')
-        {
-            if (!(argv[i][j] >= '0' && argv[i][j] <= '9') && (argv[i][j] == '-' || argv[i][j] == '+'))
+        if (str[k] != ' ')
+		{
+            strok = malloc(sizeof(char) * ft_strlenbeg(str, k) + 1);
+            while (str[k] != ' ' && str[k] != '\0')
             {
-                ft_printf("Containing other than numbers\n");
-                exit(0);
+                strok[j] = str[k];
+				k++;
+                j++;
             }
-            j++;
+            strok[j] = '\0';
+            argv[i] = strok;
+            j = 0;
+            i++;
+		}
+		if (str[k] != '\0')
+			k++;
+    }
+    return (i - 1);
+}
+
+void    ft_free(char **array, int pilesize)
+{
+	while (pilesize > 0)
+	{
+		free(array[pilesize]);
+		pilesize--;
+	}
+}
+
+int max_number_index(int *pilea, int pilesize)
+{
+    int i;
+    int max_nb;
+    int max_index;
+
+    i = pilesize - 1;
+    max_nb = pilea[i];
+    max_index = i;
+    i = i - 1;
+    while (i >= 0)
+    {
+        if (pilea[i] > max_nb)
+        {
+            max_nb = pilea[i];
+            max_index = i;
         }
-        i++;
+        i--;
+    }
+    return (max_index);
+}
+
+void    sort_small_pile(int *pilea, int *pileb, int pilesize)
+{
+    int max_index;
+
+    if (pilesize == 3)
+    {
+        if (pilea[0] == 1 && pilea[1] == 3 && pilea[2] == 2)
+            ft_printf("sa\nra\n");
+        else if (pilea[0] == 2 && pilea[1] == 1 && pilea[2] == 3)
+            ft_printf("sa\n");
+        else if (pilea[0] == 3 && pilea[1] == 2 && pilea[2] == 1)
+            ft_printf("sa\nrra\n");
+        free(pilea);
+        free(pileb);
+        exit(0);
+    }
+    if (pilesize == 4)
+    {
+        max_index = max_number_index(pilea, pilesize);
+        while (pilea[0] != 4)
+        {
+            if (max_index <= pilesize / 2)
+            {
+                ra_rb(pilea, pilesize);
+                ft_printf("ra\n");
+            }
+            else
+            {
+                rra_rrb(pilea, pilesize);
+                ft_printf("rra\n");
+            }
+        
+        }
+        pb_pa(pilea, pileb, "pb", pilesize, 0);
+        ft_printf("pb\n");
+        if (pilea[0] == 1 && pilea[1] == 3 && pilea[2] == 2)
+            ft_printf("sa\nra\n");
+        else if (pilea[0] == 2 && pilea[1] == 1 && pilea[2] == 3)
+            ft_printf("sa\n");
+        else if (pilea[0] == 2 && pilea[1] == 3 && pilea[2] == 1)
+            ft_printf("rra\n");
+        else if (pilea[0] == 3 && pilea[1] == 1 && pilea[2] == 2)
+            ft_printf("ra\n");
+        else if (pilea[0] == 3 && pilea[1] == 2 && pilea[2] == 1)
+            ft_printf("sa\nrra\n");
+        ft_printf("pa\n");
+        ft_printf("ra\n");
+        free(pilea);
+        free(pileb);
+        exit(0);
+    }
+    if (pilesize == 5)
+    {
+        max_index = max_number_index(pilea, pilesize);
+        ft_printf("max index : %d", max_index);
+        while (pilea[0] != 4)
+        {
+            if (max_index <= pilesize / 2)
+            {
+                ra_rb(pilea, pilesize);
+                ft_printf("ra\n");
+            }
+            else
+            {
+                rra_rrb(pilea, pilesize);
+                ft_printf("rra\n");
+            }
+        
+        }
+        pb_pa(pilea, pileb, "pb", pilesize, 0);
+        ft_printf("pb\n");
+        max_index = max_number_index(pilea, pilesize);
+        ft_printf("max index : %d", max_index);
+        while (pilea[0] != 5)
+        {
+            if (max_index <= pilesize / 2)
+            {
+                ra_rb(pilea, pilesize);
+                ft_printf("ra\n");
+            }
+            else
+            {
+                rra_rrb(pilea, pilesize);
+                ft_printf("rra\n");
+            }
+        
+        }
+        pb_pa(pilea, pileb, "pb", pilesize - 1, 1);
+        ft_printf("pb\n");
+        if (pilea[0] == 1 && pilea[1] == 3 && pilea[2] == 2)
+        {
+            sa_sb(pilea, pilesize - 2);
+            ra_rb(pilea, pilesize - 2);
+            ft_printf("sa\nra\n");
+        }
+        else if (pilea[0] == 2 && pilea[1] == 1 && pilea[2] == 3)
+        {
+            sa_sb(pilea, pilesize - 2);
+            ft_printf("sa\n");
+        }
+        else if (pilea[0] == 2 && pilea[1] == 3 && pilea[2] == 1)
+        {
+            rra_rrb(pilea, pilesize - 2);
+            ft_printf("rra\n");
+        }
+        else if (pilea[0] == 3 && pilea[1] == 1 && pilea[2] == 2)
+        {
+            ra_rb(pilea, pilesize - 2);
+            ft_printf("ra\n");
+        }
+        else if (pilea[0] == 3 && pilea[1] == 2 && pilea[2] == 1)
+        {
+            sa_sb(pilea, pilesize - 2);
+            rra_rrb(pilea, pilesize - 2);
+            ft_printf("sa\nrra\n");
+        }
+        pb_pa(pilea, pileb, "pa", pilesize - 2, 2);
+        ft_printf("pa\n");
+        pb_pa(pilea, pileb, "pa", pilesize - 1, 1);
+        ft_printf("pa\n");
+        ra_rb(pilea, pilesize);
+        ft_printf("ra\n");
+        ra_rb(pilea, pilesize);
+        ft_printf("ra\n");
+        print_piles(pilea, pileb, pilesize, 0);
+        free(pilea);
+        free(pileb);
+        exit(0);
     }
 }
 
@@ -461,30 +703,55 @@ int     main(int argc, char *argv[])
     int     *pilea;
     int     *pileb;
     int *pileacpy;
+    int check = 0;
+    char    *str;
 
-    handle_errors(argv);
-    while (argv[i++])
-        pilesize++;
+    if (argc == 2 && is_there_space(argv[1]) == 1)
+    {
+        str = argv[1];
+        pilesize = fill_argv(str, argv);
+        check = 1;
+    }
+    if (check == 0)
+    {
+        while (argv[i++])
+            pilesize++;
+    }
     pilea = malloc(sizeof(int) * pilesize);
     pileb = malloc(sizeof(int) * pilesize);
     pileacpy = malloc(sizeof(int*) * pilesize);
     i = 0;
     while (i < pilesize)
     {
-        pilea[i] = ft_atoi(argv[k]);
+        pilea[i] = ft_atoi(argv[k], pilea, pileb, pileacpy);
+        ft_printf("%s\n", argv[k]);
         i++;
         k++;
     }
-    i = 0;
-    while (i < pilesize)
+    if (check == 1)
+        ft_free(argv, pilesize);
+    if ((handle_doubles(pilea, pilesize) == 0) || (pile_is_sorted(pilea, pilesize) == 1 && pilea[0] == min_number_value(pilea, pilesize)))
     {
-        ft_printf("%d ", pilea[i]);
-        i++;
+		ft_printf("Error (doubles) or (pile already sorted)\n");
+        free(pilea);
+        free(pileb);
+        free(pileacpy);
+        exit(0);
     }
-    ft_printf("\n");
+    if (pile_is_sorted(pilea, pilesize) == 1 && pilea[0] != min_number_value(pilea, pilesize) && pilesize <= 5)
+    {
+        rotate_pile(pilea, pilesize, 1);
+        free(pilea);
+        free(pileb);
+        free(pileacpy);
+        exit(0);
+    }
     //instructions
     sort_and_assign(pilea, pileacpy, pilesize);
     free(pileacpy);
+    print_piles(pilea, pileb, pilesize, 0);
+    if (pilesize <= 5)
+        sort_small_pile(pilea, pileb, pilesize);
     bit_and_set(pilea, pileb, pilesize);
     //instructions
     free(pilea);

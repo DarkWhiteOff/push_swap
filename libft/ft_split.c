@@ -103,8 +103,8 @@ char	**ft_split(char const *s, char c)
 	{
 		ft_count_simple_array(s, c, &temp, &temp2);
 		array[i] = (char *)malloc(sizeof(char) * temp + 1);
-		if (array[i] == NULL)
-			return (ft_free(array, i));
+		/* if (array[i] == NULL)
+			return (ft_free(array, i)); */
 		ft_fill_array(array[i], s, c, &temp2);
 		i++;
 	}

@@ -40,7 +40,7 @@ typedef struct s_list
 	struct s_list		*next;
 }	t_list;
 
-int					ft_atoi(const char *str);
+int					ft_atoi(const char *str, int *pilea, int *pileb, int *pileacpy);
 void				ft_bzero(void *str, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 int					ft_isalnum(int c);
