@@ -1,17 +1,17 @@
 #include "push_swap.h"
 
-void    print_piles(int *pilea, int *pileb, int pilesize)
+void    print_piles(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb)
 {
     int r = 0;
         ft_printf("Pile a\n");
-        while (pilea[r])
+        while (r < pilesizeofa)
         {
             ft_printf("%d\n", pilea[r]);
             r++;
         }
         r = 0;
         ft_printf("Pile b\n");
-        while (pileb[r])
+        while (r < pilesizeofb)
         {
             ft_printf("%d\n", pileb[r]);
             r++;
@@ -355,7 +355,9 @@ int	decimal_to_bits(int max_value)
 		j++;
 	}
 	octet[j] = '\0';
-	return (ft_strbitlen(octet));
+    i = ft_strbitlen(octet);
+    free(octet);
+	return (i);
 }
 
 int max_number_value(int *pilea, int pilesize)
@@ -408,15 +410,44 @@ void    bit_and_set(int *pilea, int *pileb, int pilesize)
             }
             j++;
         }
-        print_piles(pilea, pileb, pilesize);
-        ft_printf("pilesizeofb : %d\n", pilesizeofb);
-        while (pilesizeofb-- > 0)
+        //print_piles(pilea, pileb, pilesizeofa, pilesizeofb);
+        //ft_printf("pilesizeofa : %d / pilesizeofb : %d\n", pilesizeofa, pilesizeofb);
+        //exit(0);
+        while (pilesizeofb > 0)
+        {
             pb_pa(pilea, pileb, "pa", pilesizeofa, pilesizeofb);
-        print_piles(pilea, pileb, pilesize);
-        exit(0);
+            pilesizeofb -= 1;
+            pilesizeofa += 1;
+        }
+        //print_piles(pilea, pileb, pilesizeofa, pilesizeofb);
+        //ft_printf("pilesizeofa : %d / pilesizeofb : %d\n", pilesizeofa, pilesizeofb);
+        //free(pilea);
+        //free(pileb);
+        //exit(0);
         j = 0;
-        pilesizeofa = pilesize;
-        pilesizeofb = 0;
+        i++;
+    }
+    print_piles(pilea, pileb, pilesizeofa, pilesizeofb);
+}
+
+void    handle_errors(char **argv)
+{
+    int i;
+    int j;
+
+    i = 1;
+    j = 0;
+    while (argv[i])
+    {
+        while (argv[i][j] != '\0')
+        {
+            if (!(argv[i][j] >= '0' && argv[i][j] <= '9') && (argv[i][j] == '-' || argv[i][j] == '+'))
+            {
+                ft_printf("Containing other than numbers\n");
+                exit(0);
+            }
+            j++;
+        }
         i++;
     }
 }
@@ -431,6 +462,7 @@ int     main(int argc, char *argv[])
     int     *pileb;
     int *pileacpy;
 
+    handle_errors(argv);
     while (argv[i++])
         pilesize++;
     pilea = malloc(sizeof(int) * pilesize);
@@ -443,6 +475,13 @@ int     main(int argc, char *argv[])
         i++;
         k++;
     }
+    i = 0;
+    while (i < pilesize)
+    {
+        ft_printf("%d ", pilea[i]);
+        i++;
+    }
+    ft_printf("\n");
     //instructions
     sort_and_assign(pilea, pileacpy, pilesize);
     free(pileacpy);
