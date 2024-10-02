@@ -22,24 +22,7 @@
 	}
 } */
 
-void	handle_errors(char **array, int *pilea, int *pileb, int *pileacpy, int k, int pilesize, int check)
-{
-	ft_printf("Error\n");
-	if (check == 1)
-	{
-		while (pilesize > 0)
-		{
-			free(array[pilesize]);
-			pilesize--;
-		}
-	}
-	free(pilea);
-    free(pileb);
-    free(pileacpy);
-    exit(0);
-}
-
-int	ft_atoi(char **array, int *pilea, int *pileb, int *pileacpy, int k, int pilesize, int check)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	nbr;
@@ -48,25 +31,22 @@ int	ft_atoi(char **array, int *pilea, int *pileb, int *pileacpy, int k, int pile
 	i = 0;
 	nbr = 0;
 	sign = 1;
-	while (ft_isspace(array[k][i]))
+	while (ft_isspace(str[i]))
 		i++;
-	if (array[k][i] == '-')
+	if (str[i] == '-')
 	{
 		sign *= -1;
 		i++;
 	}
-	else if (array[k][i] == '+')
+	else if (str[i] == '+')
 		i++;
-	while (array[k][i] != '\0')
+	if (!(str[i] >= '0' && str[i] <= '9'))
+		return (0);
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (!(array[k][i] >= '0' && array[k][i] <= '9'))
-			handle_errors(array, pilea, pileb, pileacpy, k, pilesize, check);
-		nbr = nbr * 10 + array[k][i] - '0';
+		nbr = nbr * 10 + str[i] - '0';
 		i++;
 	}
-	/* ft_printf("%d\n", (size_t)nbr);
-	if (((size_t)nbr * sign) > 2147483647 && ((size_t)nbr * sign) != -2147483648)
-		handle_errors(pilea, pileb, pileacpy, 1); */
 	return (nbr * sign);
 }
 

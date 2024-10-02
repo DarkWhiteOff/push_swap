@@ -8,7 +8,6 @@
 # include <stdarg.h>
 
 // Ft printf
-
 int					ft_printf(const char *str, ...);
 int					get_next_arg(va_list *ap, char c);
 int					ft_putchar(char c);
@@ -33,14 +32,13 @@ int					ft_get_size_ptrarray(unsigned long long adress);
 int					ft_putstr(char *str);
 
 // Libft
-
 typedef struct s_list
 {
 	void				*content;
 	struct s_list		*next;
 }	t_list;
 
-int				ft_atoi(char **array, int *pilea, int *pileb, int *pileacpy, int k, int pilesize, int check);
+int					ft_atoi(const char *str);
 void				ft_bzero(void *str, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);
 int					ft_isalnum(int c);
@@ -83,5 +81,40 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+
+// Push swap
+void    actualise_pile(int *pilex, char *str, int pilesize);
+void    sa_sb(int *pilex, int pilesize);
+void    ss(int  *pilea, int *pileb, int pilesize);
+void    pb_pa(int *pilea, int  *pileb, char *str, int pilesizeofa, int pilesizeofb);
+void    ra_rb(int *pilex, int pilesize);
+void    rr(int *pilea, int *pileb, int pilesize);
+void    rra_rrb(int *pilex, int pilesize);
+void    rrr(int *pilea, int *pileb, int pilesize);
+int min_number_value(int *pilea, int pilesize);
+int min_number_index(int *pilea, int pilesize);
+int pile_is_sorted(int *pilea, int pilesize);
+int find_swappable_index(int *pileacpy, int pilesize);
+void    rotate_pile(int *pileacpy, int pilesize, int check);
+void    sort(int *pileacpy, int pilesize, int check);
+void    sort_and_assign(int *pilea, int *pileacpy, int pilesize);
+int ft_strbitlen(char *octet);
+int	decimal_to_bits(int max_value);
+int max_number_value(int *pilea, int pilesize);
+void    bit_and_set(int *pilea, int *pileb, int pilesize);
+int search_nb_index(int *pilea, int pilesize, int tosearch);
+void    sort_pilesize_3(int *pilea, int *pileb);
+void    push_nb(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb, int index);
+void    sort_pilesize_4_5(int *pilea, int *pileb);
+void    sort_small_pile(int *pilea, int *pileb, int pilesize);
+int is_there_space(char *str);
+void    free_array(char **array, int pilesize);
+void    check_chars(char **array, int pilesize, int check);
+int handle_doubles(int *pilea, int pilesize);
+void    check_doubles(char **array, int pilesize, int check);
+int check_args(int argc, char **argv);
+void    check_pile_almost_sorted(int *pilea, int *pileb, int *pileacpy, int pilesize);
+void    handle_argc_2(int *pilea, char *str, int pilesize);
+void    handle_argc(int *pilea, char **argv, int pilesize);
 
 #endif
