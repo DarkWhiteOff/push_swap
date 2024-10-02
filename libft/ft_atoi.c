@@ -13,19 +13,33 @@
 #include "../push_swap.h"
 //#include <stdio.h>
 
-void	handle_errors(int *pilea, int *pileb, int *pileacpy, int check)
+/* void    ft_free(char **array, int pilesize)
 {
-	if (check == 0)
-		ft_printf("Error (other chars)\n");
+	while (pilesize > 0)
+	{
+		free(array[pilesize]);
+		pilesize--;
+	}
+} */
+
+void	handle_errors(char **array, int *pilea, int *pileb, int *pileacpy, int k, int pilesize, int check)
+{
+	ft_printf("Error\n");
 	if (check == 1)
-		ft_printf("Error (number too big)\n");
+	{
+		while (pilesize > 0)
+		{
+			free(array[pilesize]);
+			pilesize--;
+		}
+	}
 	free(pilea);
     free(pileb);
     free(pileacpy);
     exit(0);
 }
 
-int	ft_atoi(const char *str, int *pilea, int *pileb, int *pileacpy)
+int	ft_atoi(char **array, int *pilea, int *pileb, int *pileacpy, int k, int pilesize, int check)
 {
 	int	i;
 	int	nbr;
@@ -34,20 +48,20 @@ int	ft_atoi(const char *str, int *pilea, int *pileb, int *pileacpy)
 	i = 0;
 	nbr = 0;
 	sign = 1;
-	while (ft_isspace(str[i]))
+	while (ft_isspace(array[k][i]))
 		i++;
-	if (str[i] == '-')
+	if (array[k][i] == '-')
 	{
 		sign *= -1;
 		i++;
 	}
-	else if (str[i] == '+')
+	else if (array[k][i] == '+')
 		i++;
-	while (str[i] != '\0')
+	while (array[k][i] != '\0')
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
-			handle_errors(pilea, pileb, pileacpy, 0);
-		nbr = nbr * 10 + str[i] - '0';
+		if (!(array[k][i] >= '0' && array[k][i] <= '9'))
+			handle_errors(array, pilea, pileb, pileacpy, k, pilesize, check);
+		nbr = nbr * 10 + array[k][i] - '0';
 		i++;
 	}
 	/* ft_printf("%d\n", (size_t)nbr);
