@@ -31,11 +31,11 @@ void    push_nb(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb, int in
             ft_printf("rra\n");
         }      
     }
-    pb_pa(pilea, pileb, "pb", pilesizeofa, pilesizeofb);
+    pb_pa(pilea, pileb, 'b', pilesizeofa, pilesizeofb);
     ft_printf("pb\n");
 }
 
-void    sort_pilesize_4_5(int *pilea, int *pileb)
+void    sort_pilesize_4_5(int *pilea)
 {
     if (pilea[0] == 1 && pilea[1] == 3 && pilea[2] == 2)
         ft_printf("sa\nra\n");
@@ -56,7 +56,7 @@ void    sort_small_pile(int *pilea, int *pileb, int pilesize)
     if (pilesize == 4)
     {
         push_nb(pilea, pileb, pilesize, 0, 4);
-        sort_pilesize_4_5(pilea, pileb);
+        sort_pilesize_4_5(pilea);
         ft_printf("pa\n");
         ft_printf("ra\n");
         free(pilea);
@@ -67,7 +67,7 @@ void    sort_small_pile(int *pilea, int *pileb, int pilesize)
     {
         push_nb(pilea, pileb, pilesize, 0, 4);
         push_nb(pilea, pileb, pilesize - 1, 1, 5);
-        sort_pilesize_4_5(pilea, pileb);
+        sort_pilesize_4_5(pilea);
         ft_printf("pa\n");
         ft_printf("pa\n");
         ft_printf("ra\n");

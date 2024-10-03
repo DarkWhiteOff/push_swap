@@ -15,7 +15,7 @@ void    check_chars(char **array, int pilesize, int check)
         {
             if (!(array[i][j] >= '0' && array[i][j] <= '9'))
             {
-                ft_printf("Error (other chars)\n");
+                ft_printf("Error\n");
                 if (check == 0)
                     free_array(array, pilesize);
                 exit(0);
@@ -54,7 +54,7 @@ int handle_doubles(int *pilea, int pilesize)
 
 void    check_doubles(char **array, int pilesize, int check)
 {
-    int *pilea;
+    int  *pilea;
     int i;
     int j;
 
@@ -67,13 +67,41 @@ void    check_doubles(char **array, int pilesize, int check)
         i++;
         j++;
     }
-    if ((handle_doubles(pilea, pilesize) == 0) || (pile_is_sorted(pilea, pilesize) == 1 && pilea[0] == min_number_value(pilea, pilesize)))
+    if ((handle_doubles(pilea, pilesize) == 0)|| (pile_is_sorted(pilea, pilesize) == 1 && pilea[0] == min_number_value(pilea, pilesize)))
     {
-        ft_printf("Error (double) or (pile already sorted)\n");
+        ft_printf("Error\n");
         if (check == 0)
             free_array(array, pilesize);
         free(pilea);
         exit (0);
+    }
+    free(pilea);
+    return ;
+}
+
+void check_big_nb(char **array, int pilesize, int check)
+{
+    int i;
+    int j;
+    size_t  *pilea;
+
+    i = check;
+    j = 0;
+    pilea = malloc(sizeof(size_t) * pilesize);
+    while (j < pilesize)
+        pilea[j++] = ft_atoi(array[i++]);
+    i = 0;
+    while (i < pilesize)
+    {
+        if (pilea[i] > 2147483647 && pilea[i] < -2147483648)
+        {
+            ft_printf("Error\n");
+            if (check == 0)
+                free_array(array, pilesize);
+            free(pilea);
+            exit (0);
+        }
+        i++;
     }
     free(pilea);
     return ;
@@ -93,6 +121,7 @@ int check_args(int argc, char **argv)
         while (array[i++])
             pilesize++;
         check_chars(array, pilesize, 0);
+        check_big_nb(array, pilesize, 0);
         check_doubles(array, pilesize, 0);
         free_array(array, pilesize);
     }
@@ -102,6 +131,7 @@ int check_args(int argc, char **argv)
         while (argv[i++])
             pilesize++;
         check_chars(argv, pilesize, 1);
+        check_big_nb(argv, pilesize, 1);
         check_doubles(argv, pilesize, 1);
     }
     return (pilesize);

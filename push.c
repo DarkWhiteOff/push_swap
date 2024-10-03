@@ -1,13 +1,13 @@
 #include "push_swap.h"
 
-void    actualise_pile(int *pilex, char *str, int pilesize)
+void    actualise_pile(int *pilex, char push_unspuh, int pilesize)
 {
     int i;
     int j;
 
     i = 0;
     j = 0;
-    if (str == "push")
+    if (push_unspuh == 'p')
     {
         i = pilesize - 1;
         while (i >= j)
@@ -16,7 +16,7 @@ void    actualise_pile(int *pilex, char *str, int pilesize)
             i--;
         }
     }
-    if (str == "unpush")
+    if (push_unspuh == 'u')
     {
         while (j < pilesize - 1)
         {
@@ -27,20 +27,20 @@ void    actualise_pile(int *pilex, char *str, int pilesize)
     }
 }
 
-void    pb_pa(int *pilea, int  *pileb, char *str, int pilesizeofa, int pilesizeofb)
+void    pb_pa(int *pilea, int  *pileb, char pb_pa, int pilesizeofa, int pilesizeofb)
 {
-    if (str == "pb" && pilesizeofa > 0)
+    if (pb_pa == 'b' && pilesizeofa > 0)
     {
         if (pilesizeofb > 0)
-            actualise_pile(pileb, "push", pilesizeofb);
+            actualise_pile(pileb, 'p', pilesizeofb);
         pileb[0] = pilea[0];
-        actualise_pile(pilea, "unpush", pilesizeofa);
+        actualise_pile(pilea, 'u', pilesizeofa);
     }
-    if (str == "pa" && pilesizeofb > 0)
+    else if (pb_pa == 'a' && pilesizeofb > 0)
     {
         if (pilesizeofa > 0)
-            actualise_pile(pilea, "push", pilesizeofa);
+            actualise_pile(pilea, 'p', pilesizeofa);
         pilea[0] = pileb[0];
-        actualise_pile(pileb, "unpush", pilesizeofb);
+        actualise_pile(pileb, 'u', pilesizeofb);
     }
 }

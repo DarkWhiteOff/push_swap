@@ -54,7 +54,7 @@ int     main(int argc, char *argv[])
     sort_and_assign(pilea, pileacpy, pilesize);
     free(pileacpy);
     if (pilesize <= 5)
-    sort_small_pile(pilea, pileb, pilesize);
+        sort_small_pile(pilea, pileb, pilesize);
     bit_and_set(pilea, pileb, pilesize);
     free(pilea);
     free(pileb);

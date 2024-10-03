@@ -13,20 +13,11 @@
 #include "../push_swap.h"
 //#include <stdio.h>
 
-/* void    ft_free(char **array, int pilesize)
-{
-	while (pilesize > 0)
-	{
-		free(array[pilesize]);
-		pilesize--;
-	}
-} */
-
-int	ft_atoi(const char *str)
+size_t	ft_atoi(const char *str)
 {
 	int	i;
-	int	nbr;
-	int	sign;
+	size_t	nbr;
+	size_t	sign;
 
 	i = 0;
 	nbr = 0;
