@@ -71,6 +71,7 @@ int check_args(int argc, char **argv);
 void    check_pile_almost_sorted(int *pilea, int *pileb, int *pileacpy, int pilesize);
 void    handle_argc_2(int *pilea, char *str, int pilesize);
 void    handle_argc(int *pilea, char **argv, int pilesize);
-//void    print_piles(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb);
+int	*ft_pilecpy(int *newpile, int *pile, int pilesize);
+void    print_piles(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb);
 
 #endif
