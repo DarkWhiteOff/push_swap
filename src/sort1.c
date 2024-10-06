@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 14:22:32 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 14:22:34 by zamgar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-int	pile_is_sorted(int *pilea, int pilesize)
+int	sorted(int *pilea, int pilesize)
 {
 	int	i;
 	int	*pilex;
 
 	i = 0;
+	pilex = malloc(sizeof(int) * pilesize);
 	pilex = ft_pilecpy(pilex, pilea, pilesize);
-	while (pilex[0] != min_number_value(pilex, pilesize))
+	while (pilex[0] != min(pilex, pilesize))
 		ra_rb(pilex, pilesize);
 	pilesize = pilesize - 1;
 	i = pilesize - 1;
@@ -28,13 +41,13 @@ int	pile_is_sorted(int *pilea, int pilesize)
 
 void	rotate_pile(int *pileacpy, int pilesize, int check)
 {
-	if (pileacpy[0] == min_number_value(pileacpy, pilesize))
+	if (pileacpy[0] == min(pileacpy, pilesize))
 		return ;
 	else
 	{
 		if (min_number_index(pileacpy, pilesize) <= pilesize / 2)
 		{
-			while (pileacpy[0] != min_number_value(pileacpy, pilesize))
+			while (pileacpy[0] != min(pileacpy, pilesize))
 			{
 				ra_rb(pileacpy, pilesize);
 				if (check == 1)
@@ -43,7 +56,7 @@ void	rotate_pile(int *pileacpy, int pilesize, int check)
 		}
 		else
 		{
-			while (pileacpy[0] != min_number_value(pileacpy, pilesize))
+			while (pileacpy[0] != min(pileacpy, pilesize))
 			{
 				rra_rrb(pileacpy, pilesize);
 				if (check == 1)
@@ -61,11 +74,10 @@ int	find_swappable_index(int *pileacpy, int pilesize)
 	int	*pilex;
 
 	swap_index = 0;
+	pilex = malloc(sizeof(int) * pilesize);
 	pilex = ft_pilecpy(pilex, pileacpy, pilesize);
-	while (pilex[0] != min_number_value(pilex, pilesize))
-		ra_rb(pilex, pilesize);
-	pilesize -= 1;
-	i = pilesize - 1;
+	while_rotate(pilex, pilesize);
+	vars_init(&pilesize, &i);
 	while (pilesize > 0)
 	{
 		while (i >= 0)
@@ -81,6 +93,7 @@ int	find_swappable_index(int *pileacpy, int pilesize)
 		pilesize--;
 		i = pilesize - 1;
 	}
+	return (swap_index);
 }
 
 void	sort(int *pileacpy, int pilesize)
@@ -90,7 +103,7 @@ void	sort(int *pileacpy, int pilesize)
 
 	swappable_index = 0;
 	swappable_value = 0;
-	while (pile_is_sorted(pileacpy, pilesize) == 0)
+	while (sorted(pileacpy, pilesize) == 0)
 	{
 		swappable_index = find_swappable_index(pileacpy, pilesize);
 		swappable_value = pileacpy[swappable_index];
@@ -130,12 +143,11 @@ void	sort_and_assign(int *pilea, int *pileacpy, int pilesize)
 		{
 			if (pilea[i] == pileacpy[j])
 			{
-				pilea[i] = j + 1;
+				pilea[i++] = j + 1;
 				break ;
 			}
 			j++;
 		}
 		j = 0;
-		i++;
 	}
 }

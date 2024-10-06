@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 14:22:32 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 14:22:34 by zamgar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 void	handle_argc_2(int *pilea, char *str, int pilesize)
@@ -32,51 +44,29 @@ void	handle_argc(int *pilea, char **argv, int pilesize)
 
 int	main(int argc, char *argv[])
 {
-	int	pilesize;
-	int	*pilea;
-	int	*pileb;
-	int	*pileacpy;
+	t_pszab	psz;
+	int		*pa;
+	int		*pb;
+	int		*pileacpy;
 
-	pilesize = 0;
 	if (argc < 2)
-		return (ft_printf("Error\n", 0));
-	pilesize = check_args(argc, argv);
-	pilea = malloc(sizeof(int) * pilesize);
-	pileb = malloc(sizeof(int) * pilesize);
-	pileacpy = malloc(sizeof(int) * pilesize);
+		return (0);
+	check_args(argc, argv, &psz);
+	pa = malloc(sizeof(int) * psz.pa);
+	pb = malloc(sizeof(int) * psz.pa);
+	pileacpy = malloc(sizeof(int) * psz.pa);
 	if (argc == 2 && is_there_space(argv[1]) == 1)
-		handle_argc_2(pilea, argv[1], pilesize);
+		handle_argc_2(pa, argv[1], psz.pa);
 	if (argc > 2)
-		handle_argc(pilea, argv, pilesize);
-	if (pile_is_sorted(pilea, pilesize) == 1 && pilea[0] != min_number_value(pilea, pilesize) && pilesize <= 5)
-		check_pile_almost_sorted(pilea, pileb, pileacpy, pilesize);
-	sort_and_assign(pilea, pileacpy, pilesize);
+		handle_argc(pa, argv, psz.pa);
+	if (sorted(pa, psz.pa) == 1 && pa[0] != min(pa, psz.pa) && psz.pa <= 5)
+		pile_almost_sorted(pa, pb, pileacpy, psz.pa);
+	sort_and_assign(pa, pileacpy, psz.pa);
 	free(pileacpy);
-	print_piles(pilea, pileb, pilesize, 0);
-	if (pilesize <= 5)
-		sort_small_pile(pilea, pileb, pilesize);
-	bit_and_set(pilea, pileb, pilesize);
-	free(pilea);
-	free(pileb);
+	if (psz.pa <= 5)
+		sort_small_pile(pa, pb, &psz);
+	bit_and_set(pa, pb, &psz);
+	free(pa);
+	free(pb);
 	return (0);
-}
-
-void    print_piles(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb)
-{
-	int r = 0;
-	ft_printf("\n");
-	ft_printf("Pile a\n");
-	while (r < pilesizeofa)
-	{
-		ft_printf("%d\n", pilea[r]);
-		r++;
-	}
-	r = 0;
-	ft_printf("Pile b\n");
-	while (r < pilesizeofb)
-	{
-		ft_printf("%d\n", pileb[r]);
-		r++;
-	}
-	ft_printf("\n");
 }

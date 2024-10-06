@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 14:22:32 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 14:22:34 by zamgar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-int	min_number_value(int *pilea, int pilesize)
+int	min(int *pilea, int pilesize)
 {
 	int	i;
 	int	min_nb;
@@ -68,4 +80,10 @@ int	search_nb_index(int *pilea, int pilesize, int tosearch)
 		i++;
 	}
 	return (-1);
+}
+
+void	vars_init(int *pilesize, int *i)
+{
+	*pilesize -= 1;
+	*i = *pilesize - 1;
 }

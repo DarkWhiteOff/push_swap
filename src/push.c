@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 14:22:32 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 14:22:34 by zamgar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
 void	actualise_pile(int *pilex, char push_unspuh, int pilesize)
@@ -27,16 +39,20 @@ void	actualise_pile(int *pilex, char push_unspuh, int pilesize)
 	}
 }
 
-void	pb_pa(int *pilea, int *pileb, char pb_pa, int pilesizeofa, int pilesizeofb)
+void	pb(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb)
 {
-	if (pb_pa == 'b' && pilesizeofa > 0)
+	if (pilesizeofa > 0)
 	{
 		if (pilesizeofb > 0)
 			actualise_pile(pileb, 'p', pilesizeofb);
 		pileb[0] = pilea[0];
 		actualise_pile(pilea, 'u', pilesizeofa);
 	}
-	else if (pb_pa == 'a' && pilesizeofb > 0)
+}
+
+void	pa(int *pilea, int *pileb, int pilesizeofa, int pilesizeofb)
+{
+	if (pilesizeofb > 0)
 	{
 		if (pilesizeofa > 0)
 			actualise_pile(pilea, 'p', pilesizeofa);

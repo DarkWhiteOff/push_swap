@@ -1,23 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/06 14:22:32 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 14:22:34 by zamgar           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/push_swap.h"
 
-void	check_chars(char **array, int pilesize, int check)
+void	check_chars(char **tab, int pilesize, int check)
 {
 	int	i;
 	int	j;
 
 	i = check;
 	j = 0;
-	while (array[i])
+	while (tab[i])
 	{
-		if ((array[i][j] == '-' || array[i][j] == '+') && (array[i][j + 1] != '\0'))
+		if ((tab[i][j] == '-' || tab[i][j] == '+') && (tab[i][j + 1] != '\0'))
 			j++;
-		while (array[i][j])
+		while (tab[i][j])
 		{
-			if (!(array[i][j] >= '0' && array[i][j] <= '9'))
+			if (!(tab[i][j] >= '0' && tab[i][j] <= '9'))
 			{
 				ft_printf("Error\n");
 				if (check == 0)
-					free_array(array, pilesize);
+					free_array(tab, pilesize);
 				exit(0);
 			}
 			j++;
@@ -28,18 +40,15 @@ void	check_chars(char **array, int pilesize, int check)
 	return ;
 }
 
-int	handle_doubles(int *pilea, int pilesize)
+int	dbs(int *pilea, int pilesize)
 {
 	int	i;
 	int	j;
-	int	actual_nb;
 
 	i = 0;
 	j = 0;
-	actual_nb = 0;
 	while (i < pilesize)
 	{
-		actual_nb = pilea[i];
 		while (j < pilesize)
 		{
 			if ((pilea[i] == pilea[j]) && (i != j))
@@ -52,30 +61,31 @@ int	handle_doubles(int *pilea, int pilesize)
 	return (1);
 }
 
-void	check_doubles(char **array, int pilesize, int check)
+void	check_doubles(char **array, int psz, int check)
 {
-	int	*pilea;
+	int	*p;
 	int	i;
 	int	j;
 
 	i = check;
 	j = 0;
-	pilea = malloc(sizeof(int) * pilesize);
-	while (j < pilesize)
+	p = malloc(sizeof(int) * psz);
+	while (j < psz)
 	{
-		pilea[j] = ft_atoi(array[i]);
+		p[j] = ft_atoi(array[i]);
 		i++;
 		j++;
 	}
-	if ((handle_doubles(pilea, pilesize) == 0) || (pile_is_sorted(pilea, pilesize) == 1 && pilea[0] == min_number_value(pilea, pilesize)))
+	if ((dbs(p, psz) == 0) || (sorted(p, psz) == 1 && p[0] == min(p, psz)))
 	{
-		ft_printf("Error\n");
+		if (dbs(p, psz) == 0)
+			ft_printf("Error\n");
 		if (check == 0)
-			free_array(array, pilesize);
-		free(pilea);
+			free_array(array, psz);
+		free(p);
 		exit(0);
 	}
-	free(pilea);
+	free(p);
 	return ;
 }
 
@@ -93,7 +103,7 @@ void	check_big_nb(char **array, int pilesize, int check)
 	i = 0;
 	while (i < pilesize)
 	{
-		if (pilea[i] > 2147483647 && pilea[i] < -2147483648)
+		if (pilea[i] > (size_t)2147483647 && pilea[i] < (size_t) - 2147483648)
 		{
 			ft_printf("Error\n");
 			if (check == 0)
@@ -107,32 +117,31 @@ void	check_big_nb(char **array, int pilesize, int check)
 	return ;
 }
 
-int	check_args(int argc, char **argv)
+void	check_args(int argc, char **argv, t_pszab *pilesizes)
 {
 	char	**array;
 	int		i;
-	int		pilesize;
 
-	pilesize = 0;
+	pilesizes->pa = 0;
 	if (argc == 2 && is_there_space(argv[1]) == 1)
 	{
 		i = 0;
 		array = ft_split(argv[1], ' ');
 		while (array[i++])
-			pilesize++;
-		check_chars(array, pilesize, 0);
-		check_big_nb(array, pilesize, 0);
-		check_doubles(array, pilesize, 0);
-		free_array(array, pilesize);
+			pilesizes->pa++;
+		check_chars(array, pilesizes->pa, 0);
+		check_big_nb(array, pilesizes->pa, 0);
+		check_doubles(array, pilesizes->pa, 0);
+		free_array(array, pilesizes->pa);
 	}
 	else if (argc >= 2)
 	{
 		i = 1;
 		while (argv[i++])
-			pilesize++;
-		check_chars(argv, pilesize, 1);
-		check_big_nb(argv, pilesize, 1);
-		check_doubles(argv, pilesize, 1);
+			pilesizes->pa++;
+		check_chars(argv, pilesizes->pa, 1);
+		check_big_nb(argv, pilesizes->pa, 1);
+		check_doubles(argv, pilesizes->pa, 1);
 	}
-	return (pilesize);
+	pilesizes->pb = 0;
 }
