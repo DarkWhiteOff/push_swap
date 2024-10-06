@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../includes/push_swap.h"
 //#include <stdio.h>
 
 static unsigned int	ft_count_double_array(char const *s, char c)

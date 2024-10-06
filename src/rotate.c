@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 void	ra_rb(int *pilex, int pilesize)
 {

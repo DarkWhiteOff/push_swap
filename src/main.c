@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 void	handle_argc_2(int *pilea, char *str, int pilesize)
 {

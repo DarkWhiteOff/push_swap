@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 void	sort_pilesize_3(int *pilea, int *pileb)
 {

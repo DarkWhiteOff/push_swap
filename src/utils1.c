@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 int	min_number_value(int *pilea, int pilesize)
 {

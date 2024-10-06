@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 void	check_chars(char **array, int pilesize, int check)
 {

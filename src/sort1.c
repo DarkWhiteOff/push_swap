@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 int	pile_is_sorted(int *pilea, int pilesize)
 {

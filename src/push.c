@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 void	actualise_pile(int *pilex, char push_unspuh, int pilesize)
 {
