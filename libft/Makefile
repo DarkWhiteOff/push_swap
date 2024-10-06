@@ -35,7 +35,7 @@ $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 clean:
-	rm -f $(OBJSALL)
+	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)

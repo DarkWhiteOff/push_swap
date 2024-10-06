@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push_swap.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <stdarg.h>
 
-// Libft
+// LIBFT
 size_t	ft_atoi(const char *str);
 int		ft_isspace(int c);
 char	**ft_split(char const *s, char c);
