@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 19:26:15 by zamgar            #+#    #+#             */
-/*   Updated: 2024/10/06 19:26:26 by zamgar           ###   ########.fr       */
+/*   Created: 2024/10/07 13:55:42 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/07 13:55:44 by zamgar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "../includes/push_swap.h"
 
 int	ft_putchar(char c)
 {

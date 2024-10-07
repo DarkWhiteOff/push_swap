@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "../includes/push_swap.h"
 //#include <stdio.h>
 
-int	ft_atoi(const char *str)
+size_t	ft_atoi(const char *str)
 {
-	int	i;
-	int	nbr;
-	int	sign;
+	int		i;
+	size_t	nbr;
+	size_t	sign;
 
 	i = 0;
 	nbr = 0;

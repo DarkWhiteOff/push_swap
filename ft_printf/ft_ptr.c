@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/06 19:25:59 by zamgar            #+#    #+#             */
-/*   Updated: 2024/10/06 19:26:04 by zamgar           ###   ########.fr       */
+/*   Created: 2024/10/07 13:55:33 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/07 13:55:35 by zamgar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minitalk.h"
+#include "../includes/push_swap.h"
 
 int	ft_get_size_ptrarray(unsigned long long adress)
 {

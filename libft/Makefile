@@ -12,23 +12,11 @@
 
 SRC =	ft_atoi.c \
 	ft_isspace.c \
-	ft_printf.c \
-	ft_hex.c \
-	ft_itoa.c \
-	ft_ptr.c \
-	ft_putcharstr.c \
-	ft_strlen.c \
-	ft_unsigned_itoa.c \
+	ft_split.c \
 
 BFILES =	ft_atoi.o \
 		ft_isspace.o \
-		ft_printf.o \
-		ft_hex.o \
-		ft_itoa.o \
-		ft_ptr.o \
-		ft_putcharstr.o \
-		ft_strlen.o \
-		ft_unsigned_itoa.o \
+		ft_split.o \
 
 OBJS = ${SRC:.c=.o}
 
