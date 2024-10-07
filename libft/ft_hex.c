@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 13:55:04 by zamgar            #+#    #+#             */
-/*   Updated: 2024/10/07 13:55:10 by zamgar           ###   ########.fr       */
+/*   Created: 2024/10/06 19:25:33 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 19:25:34 by zamgar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../minitalk.h"
 
 int	ft_get_size_hexarray(unsigned int n)
 {

@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 13:55:50 by zamgar            #+#    #+#             */
-/*   Updated: 2024/10/07 13:55:52 by zamgar           ###   ########.fr       */
+/*   Created: 2024/10/06 19:26:34 by zamgar            #+#    #+#             */
+/*   Updated: 2024/10/06 19:26:35 by zamgar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../minitalk.h"
 
 size_t	ft_strlen(const char *s)
 {

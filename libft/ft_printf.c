@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zamgar <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/07 13:54:55 by zamgar            #+#    #+#             */
-/*   Updated: 2024/10/07 13:54:56 by zamgar           ###   ########.fr       */
+/*   Created: 2024/06/12 12:48:28 by zamgar            #+#    #+#             */
+/*   Updated: 2024/06/13 17:37:42 by zamgar           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../minitalk.h"
 
 int	get_next_arg(va_list *ap, char c)
 {
